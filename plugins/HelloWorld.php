@@ -1,5 +1,3 @@
-#!/usr/bin/php
-
 <?php
 
 /*
@@ -21,14 +19,12 @@
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
 
-require_once("classes/IRCBot.php");
+class HelloWorld extends Plugin {
 
-	$Nimda = new IRCBot("Nimda3424", "Nimda", "0", "noother's Bot");
-	$Nimda->connect("irc.freenode.net");
-	$Nimda->login();
-	
-	while(true) {
-		if(!$Nimda->readMessage()) break;
+	function isTriggered() {
+		$this->sendOutput($this->CONFIG['helloworld_text']);
 	}
+
+}
 
 ?>
