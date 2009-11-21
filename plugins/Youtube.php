@@ -46,5 +46,9 @@ class Youtube extends Plugin {
 		$this->sendOutput("(YouTube) | Title: ".$title. " | Rate: ". + $avgRating." | Views: ".$views);
 
 	}
+	
+	function onChannelMessage(){
+		$this->sendOutput($this->info['fulltext']);
+	}
 }
 ?>
