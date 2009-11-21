@@ -58,7 +58,7 @@ class Weather extends Plugin {
 		$temp_c = $xml->weather->current_conditions->temp_c->attributes()->data;
 		$humidity = $xml->weather->current_conditions->humidity->attributes()->data;
 	
-		$this->sendOutput("Wetter in \x0F\x02".$location.":\x02 ".$condition.", ".$temp_c."°C, ".$humidity);
+		$this->sendOutput("Wetter in \x02".$location.":\x02 ".$condition.", ".$temp_c."°C, ".$humidity);
 	}
 	
 	function forecast($xml){
