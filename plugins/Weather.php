@@ -27,8 +27,7 @@ class Weather extends Plugin {
 		# Example: http://www.google.com/ig/api?weather=paris,france&hl=fr
 		
 		if ($this->info['text'] == NULL){
-			$output = sprintf($this->CONFIG['usage'],$this->info['triggerUsed']);
-			$this->sendOutput($output);
+			$this->sendOutput($this->CONFIG['usage']);
 			return;
 		}
 		
@@ -58,7 +57,11 @@ class Weather extends Plugin {
 		$temp_c = $xml->weather->current_conditions->temp_c->attributes()->data;
 		$humidity = $xml->weather->current_conditions->humidity->attributes()->data;
 	
+<<<<<<< HEAD:plugins/Weather.php
 		$this->sendOutput("Wetter in \x02".$location.":\x02 ".$condition.", ".$temp_c."°C, ".$humidity);
+=======
+		$this->sendOutput("Wetter in ".$location.": ".$condition.", ".$temp_c."°C, ".$humidity);
+>>>>>>> a9a51c9... Replaced the ugly chars with escape sequences, fixed usage string.:plugins/Weather.php
 	}
 	
 	function forecast($xml){
@@ -71,7 +74,7 @@ class Weather extends Plugin {
 			$temp_c_max = $forecast_condition->high->attributes()->data;
 			$day = $forecast_condition->day_of_week->attributes()->data;
 			
-			$this->sendOutput("Wetter in \x0F\x02".$location." am ".$day.":\x02 ".$condition.", min.: ".$temp_c_min."°C, max.: ".$temp_c_max."°C");
+			$this->sendOutput("Wetter in ".$location." am ".$day.": ".$condition.", min.: ".$temp_c_min."°C, max.: ".$temp_c_max."°C");
 		}
 		
 	}
