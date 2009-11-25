@@ -46,9 +46,14 @@ class Youtube extends Plugin {
 		$this->sendOutput("(YouTube) | Title: ".$title. " | Rate: ". + $avgRating." | Views: ".$views);
 
 	}
-	
+
 	function onChannelMessage(){
-		$this->sendOutput($this->info['fulltext']);
+		// #(^|\s)((http://)?([a-z0-9]+\.)([a-z0-9\-]+\.)?[a-z]{2,4}(/[\w/\.\-]+[^[:punct:]]/?)?)([\s[:punct:]$])#i
+		print_r($this->info);
+		#if (preg_match("//youtube//",this->info['text']),$output){
+		#	$this->sendOutput("link found!" + $output[0]);
+		#}
+		
 	}
 }
 ?>
