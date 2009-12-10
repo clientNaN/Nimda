@@ -27,11 +27,8 @@ class Weather extends Plugin {
 		# Example: http://www.google.com/ig/api?weather=paris,france&hl=fr
 		
 		if ($this->info['text'] == NULL){
-<<<<<<< HEAD:plugins/Weather.php
-=======
 			$output = sprintf($this->CONFIG['usage'],$this->info['triggerUsed']);
 			$this->sendOutput($output);
->>>>>>> c9d0c2a67ba3a028395914a73e94839a6aae4a9e:plugins/Weather.php
 			return;
 		}
 		
@@ -44,10 +41,7 @@ class Weather extends Plugin {
 		$temp = $xml->weather->forecast_information->city;
 		if($temp)
 		{
-<<<<<<< HEAD:plugins/Weather.php
-=======
 			if($this->info['triggerUsed'] == "!weather" || $this->info['triggerUsed'] == '!wetter')
->>>>>>> c9d0c2a67ba3a028395914a73e94839a6aae4a9e:plugins/Weather.php
 				$this->currentCondition($xml);
 			else
 				$this->forecast($xml);
@@ -64,14 +58,7 @@ class Weather extends Plugin {
 		$temp_c = $xml->weather->current_conditions->temp_c->attributes()->data;
 		$humidity = $xml->weather->current_conditions->humidity->attributes()->data;
 	
-<<<<<<< HEAD:plugins/Weather.php
-<<<<<<< HEAD:plugins/Weather.php
 		$this->sendOutput("Wetter in \x02".$location.":\x02 ".$condition.", ".$temp_c."°C, ".$humidity);
-=======
->>>>>>> a9a51c9... Replaced the ugly chars with escape sequences, fixed usage string.:plugins/Weather.php
-=======
-		$this->sendOutput("Wetter in \x02".$location.":\x02 ".$condition.", ".$temp_c."°C, ".$humidity);
->>>>>>> c9d0c2a67ba3a028395914a73e94839a6aae4a9e:plugins/Weather.php
 	}
 	
 	function forecast($xml){
@@ -84,10 +71,7 @@ class Weather extends Plugin {
 			$temp_c_max = $forecast_condition->high->attributes()->data;
 			$day = $forecast_condition->day_of_week->attributes()->data;
 			
-<<<<<<< HEAD:plugins/Weather.php
-=======
 			$this->sendOutput("Wetter in \x02".$location." am ".$day.":\x02 ".$condition.", min.: ".$temp_c_min."°C, max.: ".$temp_c_max."°C");
->>>>>>> c9d0c2a67ba3a028395914a73e94839a6aae4a9e:plugins/Weather.php
 		}
 		
 	}

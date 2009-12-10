@@ -30,7 +30,10 @@ class Translate extends Plugin {
 		$tmp = explode("-",$trigger);
 		$sl = $tmp[0];
 		$tl = $tmp[1];
+		echo "\n".$sl."\n";
+		echo $tl."\n";
 		$text = utf8_decode($this->info['text']);
+		echo $text."\n\n";
 		
 		$translation = utf8_encode($this->unhtmlentities($this->getTranslation($text,$sl,$tl)));
 		$this->sendOutput("\x02Translation: \x02".$translation);
@@ -40,6 +43,7 @@ class Translate extends Plugin {
 		$post_data = "text=".urlencode($text)."&sl=".$from."&tl=".$to;
 		$res = libHTTP::POST("translate.google.com","/translate_t?",$post_data);
 		preg_match('#<div id=result_box dir="ltr">(.*?)</div>#',$res['raw'],$arr);
+		print_r($arr);
 	return $arr[1];
 	}
 	
