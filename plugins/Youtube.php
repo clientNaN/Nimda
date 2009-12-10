@@ -22,13 +22,15 @@
 class Youtube extends Plugin {
 
 	function isTriggered() {
+	}
+	
+	function onChannelMessage(){
+
+		// Regex by Noother
+		preg_match("#(www\.)?youtube\.com/.*?(\?|&)v=([a-zA-Z0-9_-]{11})#",$this->info['text'],$videoIdArray);
+		$videoId = $videoIdArray[3];
 		
-		# This plugin will only work with the default URL:
-		# e.g. http://www.youtube.com/watch?v=a1Y73sPHKxw
-		
-		$videoId = $this->info['text'];
-		parse_str($videoId, $vars);
-		$videoId = $vars['atch?v'];
+		if (!$this->validYoutubeId($videoId)) return;
 		
 		$url = "http://gdata.youtube.com/feeds/api/videos/".$videoId;
 		
@@ -36,24 +38,28 @@ class Youtube extends Plugin {
 		$file = utf8_encode($file);
 		$xml = simplexml_load_string($file);
 		
-		$xml_rates =  $xml->children('http://schemas.google.com/g/2005');
+		$xml_rates = $xml->children('http://schemas.google.com/g/2005');
 		$xml_views = $xml->children('http://gdata.youtube.com/schemas/2007');
 		
 		$avgRating = number_format($xml->children('http://schemas.google.com/g/2005')->rating->attributes()->average,2);
 		$views = number_format($xml->children('http://gdata.youtube.com/schemas/2007')->statistics->attributes()->viewCount);
-		$title = $xml->title;
+		$title = utf8_decode($xml->title);
 		
-		$this->sendOutput("(YouTube) | Title: ".$title. " | Rate: ". + $avgRating." | Views: ".$views);
-
-	}
-
-	function onChannelMessage(){
-		// #(^|\s)((http://)?([a-z0-9]+\.)([a-z0-9\-]+\.)?[a-z]{2,4}(/[\w/\.\-]+[^[:punct:]]/?)?)([\s[:punct:]$])#i
-		print_r($this->info);
-		#if (preg_match("//youtube//",this->info['text']),$output){
-		#	$this->sendOutput("link found!" + $output[0]);
-		#}
+		$this->sendOutput("(YouTube) |\x02 Title: \x02".$title. "\x02 \x02|\x02 Rate: \x02". + $avgRating."/5.00\x02 \x02|\x02 Views: \x02".$views);
 		
 	}
+
+	
+	/* Check if Youtube ID is valid */
+	function validYoutubeId($id) {
+		if ($id == "") return false;
+		
+		$data = file_get_contents("http://gdata.youtube.com/feeds/api/videos/".$id);
+		if (!$data) return false;
+		if ($data == "Invalid id") return false;
+		
+		return true;
+	}
+
 }
 ?>
