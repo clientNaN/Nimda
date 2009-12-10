@@ -40,7 +40,11 @@ class Vs extends Plugin {
 		$word1Hits = $this->getHits($input[0]);
 		$word2Hits = $this->getHits($input[1]);
 		
-		
+		if ($word1Hits + $word2Hits == 0){
+			$zero = array("zero", "oh", "null", "nil", "nought");
+			$this->sendOutput("I can't compare ".$zero[rand(0,4)]." with ".$zero[rand(0,4)].".");
+			return;
+		}
 		
 		$this->sendOutput("(".$word1Hits.") \x02".$input[0]."\x02 ".$this->getBar(str_replace(".","",$word1Hits),str_replace(".","",$word2Hits))."\x02 ".$input[1]."\x02 (".$word2Hits.")");
 	}
@@ -55,8 +59,9 @@ class Vs extends Plugin {
 		
 		preg_match('#Ergebnisse <b>1</b> - <b>\d{1,2}</b> von (ungef.hr )?<b>(.*?)</b> #',$result,$arr);
 		if(empty($arr)) $output= "0";
-		elseif(!empty($arr[1])) $output= "";
+		elseif(!empty($arr[1])) $output= "0";
 		$output = $arr[2];
+		if ($output == "") $output = "0";
 		return $output;
 	}
 	
